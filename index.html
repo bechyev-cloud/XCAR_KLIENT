@@ -11,6 +11,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="XCAR">
+<meta name="format-detection" content="telephone=no">
+<meta name="color-scheme" content="light dark">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png">
@@ -19,7 +21,9 @@
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 
 <style>
-body{margin:0;background:linear-gradient(180deg,#f5f7fa,#eef2f7);font-family:system-ui;display:flex;justify-content:center;padding:18px;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;}
+html{overscroll-behavior-y:none;height:100%;-webkit-tap-highlight-color:transparent;}
+*{-webkit-tap-highlight-color:transparent;}
+body{margin:0;background:linear-gradient(180deg,#f5f7fa,#eef2f7);font-family:system-ui;display:flex;justify-content:center;padding:18px;padding-top:calc(18px + env(safe-area-inset-top));padding-bottom:calc(18px + env(safe-area-inset-bottom));padding-left:calc(18px + env(safe-area-inset-left));padding-right:calc(18px + env(safe-area-inset-right));-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;overscroll-behavior-y:none;min-height:100%;box-sizing:border-box;}
 input,textarea,select{-webkit-touch-callout:default;-webkit-user-select:text;user-select:text;}
 .card{width:100%;max-width:480px;background:#fff;padding:22px 18px 26px 18px;border-radius:20px;box-shadow:0 12px 35px rgba(0,0,0,.08);}
 
@@ -75,7 +79,7 @@ td{padding:12px;text-align:center;border-bottom:1px solid #e5e5e5;}
 
 .modalOverlay{display:none;position:fixed;inset:0;background:rgba(10,20,40,.55);backdrop-filter:blur(3px);z-index:999;justify-content:center;align-items:center;padding:20px;}
 .modalOverlay.open{display:flex;}
-.modalCard{width:100%;max-width:380px;background:#fff;border-radius:22px;padding:24px 20px 20px;box-shadow:0 20px 60px rgba(0,0,0,.25);position:relative;animation:popIn .22s ease;}
+.modalCard{width:100%;max-width:380px;max-height:90vh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;background:#fff;border-radius:22px;padding:24px 20px 20px;box-shadow:0 20px 60px rgba(0,0,0,.25);position:relative;animation:popIn .22s ease;}
 @keyframes popIn{from{opacity:0;transform:scale(.9) translateY(10px);}to{opacity:1;transform:scale(1) translateY(0);}}
 .modalTitle{text-align:center;font-size:20px;font-weight:800;color:#001f5b;margin-bottom:4px;}
 .modalSub{text-align:center;font-size:12px;color:#8a93a3;margin-bottom:18px;}
@@ -106,7 +110,7 @@ td{padding:12px;text-align:center;border-bottom:1px solid #e5e5e5;}
 
 .settingsOpenBtn{width:100%;margin-top:4px;padding:13px 14px;border-radius:16px;border:1.5px dashed #c9d3e0;background:#fff;color:#2a2f36;font-weight:700;font-size:13.5px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .15s ease;}
 .settingsOpenBtn:active{background:#f3f6fb;}
-#settingsModal .modalCard{max-width:400px;max-height:86vh;overflow-y:auto;}
+#settingsModal .modalCard{max-width:400px;max-height:86vh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
 .settingsSection{margin-top:6px;margin-bottom:18px;}
 .settingsSectionTitle{font-weight:800;font-size:13px;color:#1a1f29;margin-bottom:10px;}
 .billingModeRow{display:flex;gap:10px;}
@@ -124,6 +128,13 @@ td{padding:12px;text-align:center;border-bottom:1px solid #e5e5e5;}
 .authModeOpt{flex:1;min-width:0;width:auto;padding:9px 10px;border-radius:12px;border:1.5px solid #eef1f6;background:#f6f8fb;font-weight:700;font-size:12.5px;color:#8a93a3;cursor:pointer;font-family:inherit;transition:background .15s ease,border-color .15s ease,color .15s ease;margin-top:0;}
 .authModeOpt:active{background:#eef2f7;}
 .authModeOpt.active{background:#eef4ff;border-color:#0047ff;color:#0047ff;}
+.accountServerLink{width:100%;display:flex;align-items:center;gap:10px;padding:11px 12px;margin:0 0 12px;border-radius:14px;border:1.5px solid #e2e6ec;background:#f9fbfd;cursor:pointer;font-family:inherit;text-align:left;box-sizing:border-box;}
+.accountServerLink:active{background:#eef2f7;}
+.accountServerLinkIcon{font-size:18px;flex-shrink:0;}
+.accountServerLinkInfo{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;}
+.accountServerLinkLabel{font-size:10.5px;font-weight:700;color:#9aa3b0;text-transform:uppercase;letter-spacing:.3px;}
+.accountServerLinkText{font-size:13px;font-weight:800;color:#1a2030;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.accountServerLinkChev{font-size:11px;font-weight:800;color:#0047ff;flex-shrink:0;white-space:nowrap;}
 .serverProfileList{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
 .serverProfileItem{display:flex;flex-direction:column;gap:7px;padding:10px 11px;border-radius:14px;border:1.5px solid #eef1f6;background:#f6f8fb;transition:background .15s ease,border-color .15s ease;}
 .serverProfileItem.active{border-color:#0047ff;background:#eef4ff;}
@@ -163,7 +174,7 @@ td{padding:12px;text-align:center;border-bottom:1px solid #e5e5e5;}
 .pullRefreshIndicator .spinning{display:inline-block;animation:pullSpin .7s linear infinite;}
 @keyframes pullSpin{to{transform:rotate(360deg);}}
 
-#rentModal,#completeRentModal,#deleteMonthModal{z-index:1000;}
+#rentModal,#completeRentModal,#deleteMonthModal,#notifyModal{z-index:1000;}
 .rentFormRow{display:flex;gap:10px;}
 .rentFormRow input{flex:1;min-width:0;}
 
@@ -200,7 +211,7 @@ td{padding:12px;text-align:center;border-bottom:1px solid #e5e5e5;}
 .carPickerBtn .carPickerPrice{font-weight:500;color:#7a8494;font-size:12px;margin-top:1px;}
 .carPickerBtn .chev{color:#9aa3b0;font-size:13px;flex-shrink:0;}
 
-.carListWrap{max-height:52vh;overflow-y:auto;margin:-4px 0 4px;}
+.carListWrap{max-height:52vh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;margin:-4px 0 4px;}
 .page2Panel .carListWrap{max-height:none;overflow:visible;}
 .carItem{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:16px;background:#f6f8fb;margin-bottom:8px;cursor:pointer;transition:background .12s ease;border:1.5px solid transparent;}
 .carItem:active{background:#eef2f7;}
@@ -212,7 +223,7 @@ td{padding:12px;text-align:center;border-bottom:1px solid #e5e5e5;}
 .carEmptyState{text-align:center;color:#9aa3b0;font-size:13px;padding:24px 10px;}
 
 .carSettingsRow{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
-.carSettingsRow input{margin:0;padding:10px 12px;font-size:13.5px;border-radius:12px;}
+.carSettingsRow input{margin:0;padding:10px 12px;font-size:16px;border-radius:12px;}
 .carNameWrap{position:relative;flex:1.4;min-width:0;border-radius:14px;overflow:hidden;background:#f9fbfd;}
 .carEditName{width:100%;position:relative;z-index:1;background:transparent;box-sizing:border-box;}
 .carNameFill{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0;
@@ -225,15 +236,20 @@ clip-path:inset(0 100% 0 0);transition:clip-path 1s linear,opacity .3s ease;}
 .page2HeaderBtns{display:flex;align-items:center;gap:8px;flex-shrink:0;}
 .carAddTopBtn{width:30px;height:30px;border-radius:50%;border:none;background:#0047ff;color:#fff;font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s ease,transform .1s ease;box-shadow:0 2px 8px rgba(0,71,255,.35);}
 .carAddTopBtn:active{background:#0038cc;transform:scale(.94);}
+.notifyBellBtn{position:relative;width:30px;height:30px;border-radius:50%;border:none;background:rgba(255,255,255,.16);color:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s ease,transform .1s ease;-webkit-tap-highlight-color:transparent;}
+.notifyBellBtn:active{background:rgba(255,255,255,.3);transform:scale(.94);}
+.notifyBellBtn.ring .notifyBellIcon{animation:notifyBellRing .5s ease;}
+@keyframes notifyBellRing{0%,100%{transform:rotate(0);}20%{transform:rotate(-18deg);}40%{transform:rotate(16deg);}60%{transform:rotate(-10deg);}80%{transform:rotate(6deg);}}
+.notifyBellBadge{position:absolute;top:-3px;right:-3px;min-width:16px;height:16px;padding:0 4px;border-radius:9px;background:#ff3b30;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px #001f5b;}
 
 .historyHandle{position:fixed;left:0;top:50%;transform:translateY(-50%);width:6px;height:64px;background:#0047ff;border-radius:0 8px 8px 0;opacity:.35;z-index:900;transition:opacity .2s ease;}
 .historyOverlay{display:none;position:fixed;inset:0;background:rgba(6,12,28,.55);backdrop-filter:blur(2px);z-index:998;}
 .historyOverlay.open{display:block;}
 .historyDrawer{position:fixed;top:0;left:0;bottom:0;width:95%;max-width:460px;background:#f6f8fc;z-index:999;box-shadow:16px 0 46px rgba(0,10,40,.28);border-radius:0 28px 28px 0;overflow:hidden;transform:translateX(-100%);transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;}
 .historyDrawer.open{transform:translateX(0);}
-.historyDrawer.dragging{transition:none;}
+.historyDrawer.dragging{transition:none;will-change:transform;}
 
-.historyHeader{background:linear-gradient(135deg,#001f5b 0%,#0047a8 100%);padding:28px 20px 20px;flex-shrink:0;position:relative;overflow:hidden;}
+.historyHeader{background:linear-gradient(135deg,#001f5b 0%,#0047a8 100%);padding:calc(28px + env(safe-area-inset-top)) 20px 20px;flex-shrink:0;position:relative;overflow:hidden;}
 .historyHeader::after{content:"";position:absolute;width:170px;height:170px;background:rgba(255,255,255,.07);border-radius:50%;top:-95px;right:-55px;pointer-events:none;}
 .historyHeaderTop{display:flex;align-items:flex-start;justify-content:space-between;position:relative;z-index:1;}
 .historyTitle{font-size:19px;font-weight:800;color:#fff;letter-spacing:.2px;}
@@ -241,7 +257,7 @@ clip-path:inset(0 100% 0 0);transition:clip-path 1s linear,opacity .3s ease;}
 .historyCloseBtn{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.16);border:none;font-size:14px;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s ease,transform .3s cubic-bezier(.34,1.56,.64,1);-webkit-tap-highlight-color:transparent;}
 .historyCloseBtn:active{background:rgba(255,255,255,.32);transform:scale(.82) rotate(90deg);}
 
-.historyList{flex:1;overflow-y:auto;padding:16px 14px 6px;}
+.historyList{flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding:16px 14px calc(6px + env(safe-area-inset-bottom));}
 .historyItem{background:#fff;border-radius:18px;padding:14px 40px 14px 14px;margin-bottom:12px;position:relative;z-index:0;cursor:pointer;transition:transform .12s ease,box-shadow .12s ease;box-shadow:0 2px 10px rgba(20,30,60,.06);border:1px solid #eef1f6;}
 .historyItem:active{transform:scale(.98);background:#fbfcfe;}
 .historyItem.holding{box-shadow:0 2px 14px rgba(0,71,255,.28);}
@@ -282,6 +298,19 @@ clip-path:inset(0 100% 0 0);}
 .historyDayBackTitle{font-weight:800;font-size:15px;color:#1a2136;text-transform:capitalize;}
 .historyEmptyIcon{font-size:40px;margin-bottom:12px;opacity:.65;}
 
+.notifyItem{display:flex;gap:11px;background:#f6f8fb;border-radius:16px;padding:12px 13px;margin-bottom:9px;border:1.5px solid transparent;position:relative;}
+.notifyItem.unread{background:#eef4ff;border-color:#d3e2ff;}
+.notifyItem.unread::after{content:"";position:absolute;top:14px;right:12px;width:8px;height:8px;border-radius:50%;background:#0047ff;}
+.notifyIcon{width:36px;height:36px;border-radius:11px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;box-shadow:0 2px 8px rgba(20,30,60,.06);}
+.notifyItem.unread .notifyIcon{background:#fff;}
+.notifyBody{flex:1;min-width:0;}
+.notifyTitle{font-weight:800;font-size:13px;color:#1a2136;}
+.notifyDesc{font-size:12px;color:#5a6270;margin-top:2px;}
+.notifySum{font-weight:800;font-size:13px;color:#0047ff;margin-top:4px;}
+.notifySum.sumDone{color:#0a9a4a;}
+.notifyTime{font-size:10.5px;color:#9aa3b0;margin-top:4px;font-weight:600;}
+.notifyEmpty{text-align:center;color:#9aa3b0;font-size:13px;padding:34px 20px;}
+
 .exportSquare,.exportSquare *{border-radius:0 !important;}
 .exportSquare #reportBottom{padding-bottom:40px;}
 .exportSquare .footer{
@@ -295,9 +324,9 @@ height:40px;background:#ffffff;border-top:1px solid #e5e5e5;font-size:11px;
 .page2Overlay.open{display:block;}
 .page2Drawer{position:fixed;top:0;right:0;bottom:0;width:95%;max-width:460px;background:#f6f8fc;z-index:999;box-shadow:-16px 0 46px rgba(0,10,40,.28);border-radius:28px 0 0 28px;overflow:hidden;transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;}
 .page2Drawer.open{transform:translateX(0);}
-.page2Drawer.dragging{transition:none;}
+.page2Drawer.dragging{transition:none;will-change:transform;}
 
-.page2Header{background:linear-gradient(135deg,#001f5b 0%,#3d2b7a 100%);padding:28px 20px 18px;flex-shrink:0;position:relative;overflow:hidden;}
+.page2Header{background:linear-gradient(135deg,#001f5b 0%,#3d2b7a 100%);padding:calc(28px + env(safe-area-inset-top)) 20px 18px;flex-shrink:0;position:relative;overflow:hidden;}
 .page2Header::after{content:"";position:absolute;width:170px;height:170px;background:rgba(255,255,255,.07);border-radius:50%;top:-95px;left:-55px;pointer-events:none;}
 .page2HeaderTop{display:flex;align-items:flex-start;justify-content:space-between;position:relative;z-index:1;}
 .page2Title{font-size:19px;font-weight:800;color:#fff;letter-spacing:.2px;}
@@ -311,7 +340,7 @@ height:40px;background:#ffffff;border-top:1px solid #e5e5e5;font-size:11px;
 .page2Tab .tabIcon{font-size:16px;transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
 .page2Tab.active{color:#fff;}
 .page2Tab.active .tabIcon{transform:scale(1.12);}
-.page2Content{flex:1;overflow-y:auto;padding:16px 14px 6px;}
+.page2Content{flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding:16px 14px calc(6px + env(safe-area-inset-bottom));}
 .page2Panel{display:none;}
 .page2Panel.active{display:block;animation:page2FadeIn .18s ease;}
 @keyframes page2FadeIn{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
@@ -321,6 +350,45 @@ height:40px;background:#ffffff;border-top:1px solid #e5e5e5;font-size:11px;
 @keyframes carCardNewPop{0%{transform:scale(.93);opacity:0;}60%{transform:scale(1.015);opacity:1;}100%{transform:scale(1);}}
 .carCardNewFlash{animation:carCardNewPop .4s cubic-bezier(.34,1.56,.64,1);border-color:#0047ff;box-shadow:0 4px 16px rgba(0,71,255,.18);}
 .carManageCard .carSettingsRow{margin-bottom:8px;}
+
+/* ---- переключатель вида карточек автопарка: список / плитка / компакт ---- */
+.fleetViewSwitch{display:flex;gap:6px;margin:2px 0 12px;padding:4px;background:#eef1f6;border-radius:14px;}
+.fleetViewOpt{flex:1;padding:8px 4px;border:none;background:transparent;border-radius:11px;font-size:11.5px;font-weight:700;color:#7a8494;cursor:pointer;font-family:inherit;transition:background .2s ease,color .2s ease,box-shadow .2s ease;white-space:nowrap;-webkit-tap-highlight-color:transparent;}
+.fleetViewOpt.active{background:#fff;color:#0047ff;box-shadow:0 2px 8px rgba(20,30,60,.1);}
+
+/* ---- фото/аватар машины — общий для всех трёх видов карточек ---- */
+.carPhotoAvatar{position:relative;flex-shrink:0;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#eaf0ff,#dbe6ff);display:flex;align-items:center;justify-content:center;}
+.carPhotoAvatar img{width:100%;height:100%;object-fit:cover;display:block;}
+.carPhotoAvatar .carPhotoEmoji{font-size:20px;}
+.carPhotoBtn{position:absolute;right:-3px;bottom:-3px;width:22px;height:22px;border-radius:50%;border:2px solid #fff;background:#0047ff;color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 6px rgba(0,71,255,.4);padding:0;-webkit-tap-highlight-color:transparent;}
+.carManageCard.styleList .carPhotoAvatar{width:40px;height:40px;border-radius:12px;}
+.carManageCard.styleList .carPhotoAvatar .carPhotoEmoji{font-size:17px;}
+.carManageCard.styleList .carPhotoBtn{width:17px;height:17px;font-size:8px;}
+
+/* ---- ПЛИТКА: сетка 2 колонки, крупное фото сверху ---- */
+.carListWrap.viewTile{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start;}
+.carManageCard.styleTile{position:relative;padding:14px 10px 10px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+.carManageCard.styleTile .carPhotoAvatar{width:64px;height:64px;border-radius:18px;margin-bottom:9px;}
+.carManageCard.styleTile .carPhotoAvatar .carPhotoEmoji{font-size:28px;}
+.carManageCard.styleTile .carTileName{text-align:center;font-size:16px;font-weight:800;padding:8px 8px;margin:0 0 6px;border-radius:10px;width:100%;box-sizing:border-box;}
+.carManageCard.styleTile .carTilePrice{text-align:center;font-size:16px;padding:8px 8px;margin:0 0 8px;border-radius:10px;color:#0047ff;font-weight:800;width:100%;box-sizing:border-box;}
+.carManageCard.styleTile .rentSwitch{border-top:none;padding:6px 0 0;justify-content:center;gap:6px;font-size:11px;}
+.carManageCard.styleTile .rentSwitchLabel{display:none;}
+.carManageCard.styleTile .carDeleteBtn{position:absolute;top:8px;right:8px;width:26px;height:26px;font-size:11px;background:#fdeaea;}
+.carManageCard.styleTile .carRentSince{font-size:9.5px;margin-top:6px;}
+
+/* ---- КОМПАКТ: плотная горизонтальная строка ---- */
+.carManageCard.styleCompact{padding:9px 10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.carManageCard.styleCompact .carPhotoAvatar{width:38px;height:38px;border-radius:11px;}
+.carManageCard.styleCompact .carPhotoAvatar .carPhotoEmoji{font-size:16px;}
+.carManageCard.styleCompact .carCompactInfo{flex:1;min-width:110px;display:flex;flex-direction:column;gap:3px;}
+.carManageCard.styleCompact .carCompactName{font-size:16px;font-weight:700;padding:6px 8px;border-radius:8px;margin:0;}
+.carManageCard.styleCompact .carCompactPrice{font-size:16px;padding:6px 8px;border-radius:8px;margin:0;color:#7a8494;}
+.carManageCard.styleCompact .rentSwitch{border-top:none;padding:0;flex-shrink:0;width:auto;}
+.carManageCard.styleCompact .rentSwitchLabel{display:none;}
+.carManageCard.styleCompact .rentSwitchTrack{margin:0;}
+.carManageCard.styleCompact .carDeleteBtn{width:30px;height:30px;font-size:12px;flex-shrink:0;}
+.carManageCard.styleCompact .carRentSince{flex-basis:100%;font-size:9.5px;margin-top:2px;padding-left:48px;}
 .rentSwitch{display:flex;align-items:center;justify-content:space-between;gap:9px;font-size:12.5px;color:#5a6270;font-weight:700;padding:9px 2px 10px;cursor:pointer;border-top:1px dashed #eef1f6;}
 .rentSwitch input{display:none;}
 .rentSwitchTrack{width:38px;height:22px;border-radius:20px;background:#e2e6ec;position:relative;transition:background .2s ease;flex-shrink:0;}
@@ -427,7 +495,9 @@ html[data-theme="dark"] .settingsFolder{background:#141d31;border-color:#232e48;
 html[data-theme="dark"] .settingsFolder.open{border-color:#2f4372;}
 html[data-theme="dark"] .settingsFolderTitle{color:#e7ebf3;}
 html[data-theme="dark"] .settingsFolderHint,html[data-theme="dark"] .settingsSectionDesc,html[data-theme="dark"] .settingsBackupHint{color:#8b93a7;}
-html[data-theme="dark"] .billingModeOpt,html[data-theme="dark"] .serverProfileItem,html[data-theme="dark"] .authModeOpt,html[data-theme="dark"] .serverQuickAddBtn,html[data-theme="dark"] .serverEditBox,html[data-theme="dark"] .themeOpt,html[data-theme="dark"] .authCard{background:#1a2338;border-color:#26314a;color:#c7cedd;}
+html[data-theme="dark"] .billingModeOpt,html[data-theme="dark"] .serverProfileItem,html[data-theme="dark"] .authModeOpt,html[data-theme="dark"] .serverQuickAddBtn,html[data-theme="dark"] .serverEditBox,html[data-theme="dark"] .themeOpt,html[data-theme="dark"] .authCard,html[data-theme="dark"] .accountServerLink{background:#1a2338;border-color:#26314a;color:#c7cedd;}
+html[data-theme="dark"] .accountServerLinkText{color:#e7ebf3;}
+html[data-theme="dark"] .accountServerLinkLabel{color:#5c6784;}
 html[data-theme="dark"] .authModeRow{background:#141d31;}
 html[data-theme="dark"] .authModeOpt.active{background:#26314a;box-shadow:none;color:#e7ebf3;}
 html[data-theme="dark"] .billingModeOpt.active,html[data-theme="dark"] .themeOpt.active{background:#1c2c52;border-color:#3b63ff;}
@@ -460,6 +530,15 @@ html[data-theme="dark"] .subRequisites b{color:#e7ebf3;}
 html[data-theme="dark"] .subQrWrap canvas{background:#fff;}
 html[data-theme="dark"] .blacklistClean{background:#0f2a1c;border-color:#1f5c3c;color:#4ade80;}
 html[data-theme="dark"] .blacklistResultItem{background:#2a1414;border-color:#5c2323;color:#f87171;}
+html[data-theme="dark"] .fleetViewSwitch{background:#141d31;}
+html[data-theme="dark"] .fleetViewOpt{color:#8b93a7;}
+html[data-theme="dark"] .fleetViewOpt.active{background:#1c2c52;color:#7aa2ff;}
+html[data-theme="dark"] .carPhotoAvatar{background:linear-gradient(135deg,#1a2338,#121a2b);}
+html[data-theme="dark"] .notifyItem{background:#141d31;border-color:#232e48;}
+html[data-theme="dark"] .notifyItem.unread{background:#1c2c52;border-color:#3b63ff;}
+html[data-theme="dark"] .notifyIcon{background:#0d1424;}
+html[data-theme="dark"] .notifyTitle{color:#e7ebf3;}
+html[data-theme="dark"] .notifyDesc,html[data-theme="dark"] .notifyTime{color:#8b93a7;}
 </style>
 </head>
 
@@ -520,6 +599,16 @@ html[data-theme="dark"] .blacklistResultItem{background:#2a1414;border-color:#5c
 <button type="button" class="settingsOpenBtn blacklistOpenBtn" id="blacklistOpenBtn"><span>🚫 Чёрный список</span><span class="blHint" id="blacklistLastUpdatedHint">—</span></button>
 <button type="button" class="settingsOpenBtn" id="settingsOpenBtn">⚙️ Настройки приложения</button>
 
+</div>
+</div>
+
+<div class="modalOverlay" id="notifyModal">
+<div class="modalCard">
+<button class="modalClose" id="notifyModalCloseBtn">✕</button>
+<div class="modalTitle">🔔 Уведомления</div>
+<div class="modalSub">Оформление и завершение аренды, суммы</div>
+<button type="button" class="b3" id="notifyMarkAllReadBtn" style="background:#5a6270;margin-bottom:4px;">✓ Прочитано всё</button>
+<div id="notifyList" style="margin-top:10px;"></div>
 </div>
 </div>
 
@@ -627,7 +716,14 @@ html[data-theme="dark"] .blacklistResultItem{background:#2a1414;border-color:#5c
 </div>
 <div class="settingsFolderBody">
 <div class="settingsSectionDesc" id="accountStatusLine">Работает без регистрации — данные хранятся только на этом устройстве</div>
-<input id="accountServerUrl" placeholder="Адрес сервера, например https://xcar.onrender.com">
+<button type="button" class="accountServerLink" id="accountServerLinkBtn" title="Настройки сервера — в разделе «Серверы» выше">
+<span class="accountServerLinkIcon">🌐</span>
+<span class="accountServerLinkInfo">
+<span class="accountServerLinkLabel">Сервер для входа</span>
+<span class="accountServerLinkText" id="accountServerLinkText">Не выбран</span>
+</span>
+<span class="accountServerLinkChev">Изменить →</span>
+</button>
 
 <div id="accountAuthBlock">
 <div class="authCard">
@@ -894,6 +990,7 @@ html[data-theme="dark"] .blacklistResultItem{background:#2a1414;border-color:#5c
 </div>
 <div class="page2HeaderBtns">
 <button type="button" class="carAddTopBtn" id="carAddTopBtn" title="Добавить автомобиль">+</button>
+<button type="button" class="notifyBellBtn" id="notifyBellBtn" title="Уведомления"><span class="notifyBellIcon">🔔</span><span class="notifyBellBadge" id="notifyBellBadge" style="display:none;">0</span></button>
 <button type="button" class="page2CloseBtn" id="page2CloseBtn">✕</button>
 </div>
 </div>
@@ -908,6 +1005,12 @@ html[data-theme="dark"] .blacklistResultItem{background:#2a1414;border-color:#5c
 <div class="pullRefreshIndicator" id="pullRefreshIndicator"><span id="pullRefreshIcon">⬇️</span><span id="pullRefreshLabel">Потяните для синхронизации</span></div>
 
 <div class="page2Panel active" id="page2PanelFleet" data-panel="fleet">
+<input type="file" id="carPhotoFileInput" accept="image/*" style="display:none;">
+<div class="fleetViewSwitch" id="fleetViewSwitch">
+<button type="button" class="fleetViewOpt active" data-view="list" title="Список">📋 Список</button>
+<button type="button" class="fleetViewOpt" data-view="tile" title="Плитка">🔲 Плитка</button>
+<button type="button" class="fleetViewOpt" data-view="compact" title="Компакт">🗂 Компакт</button>
+</div>
 <div class="carListWrap" id="carManageList"></div>
 </div>
 
@@ -1057,7 +1160,7 @@ const SUBSCRIPTION_DEFAULT_DAYS=365;
 const DEFAULT_SERVER_URL="https://xcar-kalk-klient.onrender.com";
 const DEFAULT_SERVER_ID="default-render";
 function defaultSettings(){
-return {billingMode:"prepay",account:{serverUrl:DEFAULT_SERVER_URL,username:"",password:"",email:"",phone:"",connected:false},serverProfiles:[{id:DEFAULT_SERVER_ID,name:"Render (XCAR)",url:DEFAULT_SERVER_URL}],activeServerProfileId:DEFAULT_SERVER_ID,pushEnabled:false,pushEndpoint:"",theme:"light",showNavArrows:true,subscriptionUntil:Date.now()+SUBSCRIPTION_DEFAULT_DAYS*86400000,autoSyncEnabled:true,autoSyncIntervalSec:30};
+return {billingMode:"prepay",account:{serverUrl:DEFAULT_SERVER_URL,username:"",password:"",email:"",phone:"",connected:false},serverProfiles:[{id:DEFAULT_SERVER_ID,name:"Render (XCAR)",url:DEFAULT_SERVER_URL}],activeServerProfileId:DEFAULT_SERVER_ID,pushEnabled:false,pushEndpoint:"",theme:"light",showNavArrows:true,subscriptionUntil:Date.now()+SUBSCRIPTION_DEFAULT_DAYS*86400000,autoSyncEnabled:true,autoSyncIntervalSec:30,fleetViewStyle:"list"};
 }
 function loadSettings(){
 try{
@@ -1084,7 +1187,8 @@ theme:parsed.theme==="dark"?"dark":"light",
 showNavArrows:parsed.showNavArrows!==false,
 subscriptionUntil:typeof parsed.subscriptionUntil==="number"&&parsed.subscriptionUntil>0?parsed.subscriptionUntil:(Date.now()+SUBSCRIPTION_DEFAULT_DAYS*86400000),
 autoSyncEnabled:parsed.autoSyncEnabled!==false,
-autoSyncIntervalSec:Math.min(59,Math.max(1,parseInt(parsed.autoSyncIntervalSec,10)||30))
+autoSyncIntervalSec:Math.min(59,Math.max(1,parseInt(parsed.autoSyncIntervalSec,10)||30)),
+fleetViewStyle:["list","tile","compact"].includes(parsed.fleetViewStyle)?parsed.fleetViewStyle:"list"
 };
 }catch(e){return defaultSettings();}
 }
@@ -1160,32 +1264,60 @@ const rentedCount=cars.filter(c=>c.rented).length;
 el.textContent=`Машин: ${cars.length} · В аренде: ${rentedCount}`;
 }
 
+function carPhotoAvatarHtml(c,i){
+return `<div class="carPhotoAvatar">${c.photo?`<img src="${c.photo}" alt="">`:`<span class="carPhotoEmoji">🚗</span>`}<button type="button" class="carPhotoBtn" data-idx="${i}" title="Добавить фото">📷</button></div>`;
+}
 function renderCarManageList(){
 const wrap=document.getElementById("carManageList");
 wrap.innerHTML="";
 updatePage2Subtitle();
+const style=settings.fleetViewStyle||"list";
+wrap.classList.toggle("viewTile",style==="tile");
+document.querySelectorAll(".fleetViewOpt").forEach(b=>b.classList.toggle("active",b.dataset.view===style));
 if(!cars.length){
 wrap.innerHTML=`<div class="carEmptyState"><div class="historyEmptyIcon">🚘</div>Список пуст.<br>Добавьте первый автомобиль ниже</div>`;
 return;
 }
 cars.forEach((c,i)=>{
 const card=document.createElement("div");
-card.className="carManageCard";
 const safeName=c.name.replace(/"/g,"&quot;");
 const sinceText=(c.rented&&c.rentedSince)?`<div class="carRentSince">🕓 с ${fmtDateTime(new Date(c.rentedSince))}`+
 (c.rentedUntil?` · 🏁 до ${fmtDateTime(new Date(c.rentedUntil))}`:"")+
 (c.rentedPaid?` · внесено ${space(c.rentedPaid)} ₽`:"")+
 `</div>`:"";
+const rentSwitchHtml=`<label class="rentSwitch"><input type="checkbox" class="carRentCheck" ${c.rented?"checked":""}>`+
+`<span class="rentSwitchLabel">В аренде</span>`+
+`<span class="rentSwitchTrack"><span class="rentSwitchThumb"></span></span>`+
+`</label>`;
+if(style==="tile"){
+card.className="carManageCard styleTile";
+card.innerHTML=carPhotoAvatarHtml(c,i)+
+`<input class="carEditName carTileName" value="${safeName}">`+
+`<input class="carEditPrice carTilePrice" inputmode="numeric" value="${space(c.price)}">`+
+`<button type="button" class="carDeleteBtn" title="Удалить">🗑️</button>`+
+rentSwitchHtml+
+sinceText;
+}else if(style==="compact"){
+card.className="carManageCard styleCompact";
+card.innerHTML=carPhotoAvatarHtml(c,i)+
+`<div class="carCompactInfo">`+
+`<input class="carEditName carCompactName" value="${safeName}">`+
+`<input class="carEditPrice carCompactPrice" inputmode="numeric" value="${space(c.price)}">`+
+`</div>`+
+rentSwitchHtml+
+`<button type="button" class="carDeleteBtn" title="Удалить">🗑️</button>`+
+sinceText;
+}else{
+card.className="carManageCard styleList";
 card.innerHTML=`<div class="carSettingsRow">`+
+carPhotoAvatarHtml(c,i)+
 `<div class="carNameWrap"><div class="carNameFill"></div><input class="carEditName" value="${safeName}"></div>`+
 `<input class="carEditPrice" inputmode="numeric" value="${space(c.price)}">`+
 `<button type="button" class="carDeleteBtn" title="Удалить">🗑️</button>`+
 `</div>`+
-`<label class="rentSwitch"><input type="checkbox" class="carRentCheck" ${c.rented?"checked":""}>`+
-`<span class="rentSwitchLabel">В аренде</span>`+
-`<span class="rentSwitchTrack"><span class="rentSwitchThumb"></span></span>`+
-`</label>`+
+rentSwitchHtml+
 sinceText;
+}
 const nameInput=card.querySelector(".carEditName");
 const priceInput=card.querySelector(".carEditPrice");
 const rentCheck=card.querySelector(".carRentCheck");
@@ -1209,6 +1341,11 @@ openRentModal(i);
 openCompleteRentModal(i);
 }
 });
+card.querySelector(".carPhotoBtn").addEventListener("click",()=>{
+carPhotoTargetIdx=i;
+const fileInput=document.getElementById("carPhotoFileInput");
+if(fileInput) fileInput.click();
+});
 card.querySelector(".carDeleteBtn").addEventListener("click",()=>{
 showConfirm({
 title:"Удалить автомобиль?",
@@ -1230,6 +1367,63 @@ wrap.appendChild(card);
 });
 updateFleetRentProgress();
 }
+// ---------- фото машины: выбор файла, сжатие до разумного размера и сохранение в base64 ----------
+let carPhotoTargetIdx=null;
+function resizeImageFile(file,maxDim,quality){
+return new Promise((resolve,reject)=>{
+const reader=new FileReader();
+reader.onload=e=>{
+const img=new Image();
+img.onload=()=>{
+let w=img.width,h=img.height;
+if(w>maxDim||h>maxDim){
+if(w>h){h=Math.round(h*maxDim/w);w=maxDim;}
+else{w=Math.round(w*maxDim/h);h=maxDim;}
+}
+const canvas=document.createElement("canvas");
+canvas.width=w;canvas.height=h;
+const ctx=canvas.getContext("2d");
+ctx.drawImage(img,0,0,w,h);
+try{resolve(canvas.toDataURL("image/jpeg",quality));}
+catch(err){reject(err);}
+};
+img.onerror=reject;
+img.src=e.target.result;
+};
+reader.onerror=reject;
+reader.readAsDataURL(file);
+});
+}
+document.getElementById("carPhotoFileInput").addEventListener("change",async(e)=>{
+const file=e.target.files&&e.target.files[0];
+e.target.value="";
+if(!file||carPhotoTargetIdx===null) return;
+const idx=carPhotoTargetIdx;
+try{
+const dataUrl=await resizeImageFile(file,480,0.72);
+if(cars[idx]){
+cars[idx].photo=dataUrl;
+saveCars();
+renderCarManageList();
+renderRentedList();
+renderCarPickerList();
+vibrate(12);
+}
+}catch(err){
+vibrate([40,40,40]);
+}
+});
+// ---------- переключатель вида карточек автопарка (список / плитка / компакт) ----------
+document.querySelectorAll(".fleetViewOpt").forEach(btn=>{
+btn.addEventListener("click",()=>{
+const view=btn.dataset.view;
+settings.fleetViewStyle=view;
+saveSettings();
+document.querySelectorAll(".fleetViewOpt").forEach(b=>b.classList.toggle("active",b.dataset.view===view));
+renderCarManageList();
+vibrate(10);
+});
+});
 
 // заливка имени машины красный→жёлтый→зелёный по прогрессу текущих суток аренды (обновляется
 // без перерисовки всего списка, чтобы не сбивать фокус/курсор при вводе)
@@ -1318,6 +1512,12 @@ if(priceVal>0) cars[i].price=priceVal;
 cars[i].rentedPaid=paidVal;
 saveCars();
 notifyOtherDevices(`Машина «${cars[i].name}» оформлена в аренду`);
+addAppNotification({
+type:"created",
+car:cars[i].name,
+sum:cars[i].price,
+sumLabel:paidVal>0?`${space(cars[i].price)} ₽/сутки · предоплата ${space(paidVal)} ₽`:`${space(cars[i].price)} ₽/сутки`
+});
 if(i===selectedCarIdx) pricePerDay.value=space(cars[i].price);
 updateCarPickerLabel();
 flashSuccess(document.getElementById("rentSaveBtn"));
@@ -1387,9 +1587,10 @@ return;
 rentedCars.forEach(({c,i})=>{
 const item=document.createElement("div");
 item.className="carItem rentedCard";
+item.dataset.idx=i;
 const acc=c.rentedSince?rentAccrual(c):null;
 item.innerHTML=`<div class="rentedCardTop">`+
-`<div class="historyAvatar">🚗</div>`+
+`<div class="historyAvatar">${c.photo?`<img src="${c.photo}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">`:"🚗"}</div>`+
 `<div class="rentedCardInfo">`+
 `<div class="historyItemCar">${c.name}</div>`+
 `<div class="historyItemDate">${space(c.price)} ₽/сутки</div>`+
@@ -1399,17 +1600,39 @@ item.innerHTML=`<div class="rentedCardTop">`+
 (c.rentedSince?`<div class="historyItemChips">`+
 `<span class="historyChip">🕓 с ${fmtDateTime(new Date(c.rentedSince))}</span>`+
 (c.rentedUntil?`<span class="historyChip">🏁 до ${fmtDateTime(new Date(c.rentedUntil))}</span>`:"")+
-(acc?`<span class="historyChip chipAccent">⏳ ${acc.fullDays} дн. ${acc.remHours} ч.</span>`:"")+
-(acc?`<span class="historyChip chipToday">📅 За сегодня: ${space(acc.today)} ₽</span>`:"")+
+(acc?`<span class="historyChip chipAccent" data-field="elapsed">⏳ ${acc.fullDays} дн. ${acc.remHours} ч.</span>`:"")+
+(acc?`<span class="historyChip chipToday" data-field="today">📅 За сегодня: ${space(acc.today)} ₽</span>`:"")+
 `</div>`:"")+
-(acc?`<div class="rentedAccruedBig">${space(acc.remaining)} ₽<span>${acc.paid>0?`к доплате · начислено ${space(acc.cost)} ₽, внесено ${space(acc.paid)} ₽`:"начислено на данный момент"}</span></div>`:"");
+(acc?`<div class="rentedAccruedBig"><span data-field="remainingAmt">${space(acc.remaining)} ₽</span><span data-field="remainingSub">${acc.paid>0?`к доплате · начислено ${space(acc.cost)} ₽, внесено ${space(acc.paid)} ₽`:"начислено на данный момент"}</span></div>`:"");
 item.querySelector(".carReturnBtn").addEventListener("click",()=>{
 openCompleteRentModal(i);
 });
 wrap.appendChild(item);
 });
 }
-setInterval(renderRentedList,1000);
+// раз в секунду обновляем только текст начисления (не пересобираем весь DOM списка —
+// это раньше вызывало заметные "подёргивания" интерфейса каждую секунду на слабых телефонах)
+function updateRentedAccruals(){
+const wrap=document.getElementById("rentedList");
+if(!wrap) return;
+const items=wrap.querySelectorAll(".rentedCard[data-idx]");
+if(!items.length) return;
+items.forEach(item=>{
+const i=parseInt(item.dataset.idx,10);
+const c=cars[i];
+if(!c||!c.rented||!c.rentedSince) return;
+const acc=rentAccrual(c);
+const elapsedEl=item.querySelector('[data-field="elapsed"]');
+if(elapsedEl) elapsedEl.textContent=`⏳ ${acc.fullDays} дн. ${acc.remHours} ч.`;
+const todayEl=item.querySelector('[data-field="today"]');
+if(todayEl) todayEl.textContent=`📅 За сегодня: ${space(acc.today)} ₽`;
+const amtEl=item.querySelector('[data-field="remainingAmt"]');
+if(amtEl) amtEl.textContent=`${space(acc.remaining)} ₽`;
+const subEl=item.querySelector('[data-field="remainingSub"]');
+if(subEl) subEl.textContent=acc.paid>0?`к доплате · начислено ${space(acc.cost)} ₽, внесено ${space(acc.paid)} ₽`:"начислено на данный момент";
+});
+}
+setInterval(updateRentedAccruals,1000);
 
 // ---------- модалка завершения аренды (оплата и долг) ----------
 let completeRentCarIdx=null;
@@ -1476,6 +1699,12 @@ cars[i].rentedUntil=null;
 cars[i].rentedPaid=0;
 saveCars();
 notifyOtherDevices(`Машина «${c.name}» возвращена из аренды`);
+addAppNotification({
+type:"completed",
+car:c.name,
+sum:acc.cost,
+sumLabel:toPay>0?`Внесено ${space(totalPaid)} ₽ · остался долг ${space(Math.round(toPay))} ₽`:`Внесено ${space(totalPaid)} ₽ · полностью оплачено`
+});
 flashSuccess(document.getElementById("completeRentSaveBtn"));
 vibrate([15,25,15]);
 playSyncSound(true);
@@ -2496,6 +2725,7 @@ if(typeof parsed.settings.theme==="string") settings.theme=parsed.settings.theme
 if(typeof parsed.settings.showNavArrows==="boolean") settings.showNavArrows=parsed.settings.showNavArrows;
 if(typeof parsed.settings.autoSyncEnabled==="boolean") settings.autoSyncEnabled=parsed.settings.autoSyncEnabled;
 if(parsed.settings.autoSyncIntervalSec) settings.autoSyncIntervalSec=Math.min(59,Math.max(1,parseInt(parsed.settings.autoSyncIntervalSec,10)||30));
+if(["list","tile","compact"].includes(parsed.settings.fleetViewStyle)) settings.fleetViewStyle=parsed.settings.fleetViewStyle;
 }
 selectedCarIdx=null;
 saveCars();
@@ -2572,15 +2802,23 @@ document.getElementById("accountRegisterBtn").style.display=mode==="register"?""
 document.getElementById("authTabLogin").addEventListener("click",()=>setAuthMode("login"));
 document.getElementById("authTabRegister").addEventListener("click",()=>setAuthMode("register"));
 setAuthMode("login");
+function renderAccountServerLink(){
+const el=document.getElementById("accountServerLinkText");
+if(!el) return;
+const active=(settings.serverProfiles||[]).find(p=>p.id===settings.activeServerProfileId);
+const url=(settings.account&&settings.account.serverUrl)||"";
+if(active) el.textContent=`${active.name||"Сервер"} · ${active.url||""}`;
+else if(url) el.textContent=url;
+else el.textContent="Не выбран — откройте раздел «Серверы»";
+}
 function renderAccountUI(){
 const a=settings.account;
-const serverEl=document.getElementById("accountServerUrl");
 const userEl=document.getElementById("accountUsername");
 const passEl=document.getElementById("accountPassword");
 const emailEl=document.getElementById("accountEmail");
 const phoneEl=document.getElementById("accountPhone");
-if(!serverEl) return;
-if(document.activeElement!==serverEl) serverEl.value=a.serverUrl||"";
+if(!userEl) return;
+renderAccountServerLink();
 if(document.activeElement!==userEl) userEl.value=a.username||"";
 if(document.activeElement!==passEl) passEl.value=a.password||"";
 if(document.activeElement!==emailEl) emailEl.value=a.email||"";
@@ -2663,8 +2901,7 @@ if(!p) return;
 settings.activeServerProfileId=id;
 settings.account.serverUrl=p.url;
 saveSettings();
-const serverEl=document.getElementById("accountServerUrl");
-if(serverEl) serverEl.value=p.url;
+renderAccountServerLink();
 renderServerProfiles();
 setAccountHint(`Выбран сервер «${p.name}»`,false);
 vibrate(12);
@@ -3036,6 +3273,110 @@ headers:{"Content-Type":"application/json"},
 body:JSON.stringify({username:settings.account.username,password:settings.account.password,title:"XCAR",body:bodyText,excludeEndpoint:settings.pushEndpoint||undefined})
 }).catch(()=>{});
 }
+
+// ---------- уведомления в приложении: оформление и завершение аренды, суммы ----------
+const NOTIFY_KEY="xcarAppNotifications";
+let appNotifications=[];
+function loadAppNotifications(){
+try{
+const raw=localStorage.getItem(NOTIFY_KEY);
+appNotifications=raw?JSON.parse(raw):[];
+if(!Array.isArray(appNotifications)) appNotifications=[];
+}catch(e){appNotifications=[];}
+}
+function saveAppNotifications(){
+try{localStorage.setItem(NOTIFY_KEY,JSON.stringify(appNotifications.slice(0,150)));}catch(e){}
+}
+function addAppNotification(entry){
+appNotifications.unshift({
+id:"n"+Date.now().toString(36)+Math.random().toString(36).slice(2,7),
+type:entry.type,
+car:entry.car,
+sum:entry.sum||0,
+sumLabel:entry.sumLabel||"",
+text:entry.text||"",
+ts:Date.now(),
+read:false
+});
+saveAppNotifications();
+renderNotifyBadge();
+const btn=document.getElementById("notifyBellBtn");
+if(btn){
+btn.classList.remove("ring");
+void btn.offsetWidth;
+btn.classList.add("ring");
+}
+if(document.getElementById("notifyModal").classList.contains("open")) renderNotifyList();
+}
+function unreadNotifyCount(){return appNotifications.filter(n=>!n.read).length;}
+function renderNotifyBadge(){
+const badge=document.getElementById("notifyBellBadge");
+if(!badge) return;
+const n=unreadNotifyCount();
+if(n>0){badge.style.display="flex";badge.textContent=n>99?"99+":String(n);}
+else badge.style.display="none";
+}
+function fmtNotifyTime(ts){
+const d=new Date(ts);
+const pad=x=>("0"+x).slice(-2);
+const now=new Date();
+const sameDay=d.toDateString()===now.toDateString();
+return (sameDay?"сегодня ":pad(d.getDate())+"."+pad(d.getMonth()+1)+" ")+pad(d.getHours())+":"+pad(d.getMinutes());
+}
+function renderNotifyList(){
+const wrap=document.getElementById("notifyList");
+if(!wrap) return;
+if(!appNotifications.length){
+wrap.innerHTML=`<div class="notifyEmpty"><div class="historyEmptyIcon">🔔</div>Пока нет уведомлений — здесь появятся оформления и завершения аренды</div>`;
+return;
+}
+wrap.innerHTML="";
+appNotifications.forEach(n=>{
+const item=document.createElement("div");
+item.className="notifyItem"+(n.read?"":" unread");
+const isDone=n.type==="completed";
+const isPush=n.type==="push";
+item.innerHTML=isPush?
+(`<div class="notifyIcon">📲</div>`+
+`<div class="notifyBody">`+
+`<div class="notifyTitle">${escapeHtml(n.text||"Событие на другом устройстве")}</div>`+
+`<div class="notifyTime">${fmtNotifyTime(n.ts)}</div>`+
+`</div>`):
+(`<div class="notifyIcon">${isDone?"🏁":"🔑"}</div>`+
+`<div class="notifyBody">`+
+`<div class="notifyTitle">${isDone?"Аренда завершена":"Аренда оформлена"} — ${escapeHtml(n.car||"")}</div>`+
+(n.sumLabel?`<div class="notifyDesc">${escapeHtml(n.sumLabel)}</div>`:"")+
+`<div class="notifySum${isDone?" sumDone":""}">${space(Math.round(n.sum||0))} ₽</div>`+
+`<div class="notifyTime">${fmtNotifyTime(n.ts)}</div>`+
+`</div>`);
+item.addEventListener("click",()=>{
+if(!n.read){n.read=true;saveAppNotifications();renderNotifyBadge();item.classList.remove("unread");}
+});
+wrap.appendChild(item);
+});
+}
+function markAllNotificationsRead(){
+if(!appNotifications.length) return;
+appNotifications.forEach(n=>n.read=true);
+saveAppNotifications();
+renderNotifyBadge();
+renderNotifyList();
+vibrate(10);
+}
+loadAppNotifications();
+renderNotifyBadge();
+document.getElementById("notifyBellBtn").addEventListener("click",()=>{
+renderNotifyList();
+document.getElementById("notifyModal").classList.add("open");
+vibrate(8);
+});
+document.getElementById("notifyModalCloseBtn").addEventListener("click",()=>{
+document.getElementById("notifyModal").classList.remove("open");
+});
+document.getElementById("notifyModal").addEventListener("click",e=>{
+if(e.target.id==="notifyModal") document.getElementById("notifyModal").classList.remove("open");
+});
+document.getElementById("notifyMarkAllReadBtn").addEventListener("click",markAllNotificationsRead);
 // при запуске приложения, если аккаунт подключён и push раньше был включён — незаметно
 // продлеваем/восстанавливаем подписку (pushManager.subscribe на уже активной подписке
 // просто возвращает её же, без повторного запроса разрешения)
@@ -3043,14 +3384,14 @@ if(settings.account&&settings.account.connected&&settings.pushEnabled&&pushSuppo
 setTimeout(()=>{subscribeToPush();},2000);
 }
 
-document.getElementById("accountServerUrl").addEventListener("input",e=>{
-settings.account.serverUrl=e.target.value.trim();
-const active=(settings.serverProfiles||[]).find(p=>p.id===settings.activeServerProfileId);
-if(active&&active.url!==settings.account.serverUrl){
-settings.activeServerProfileId=null;
-renderServerProfiles();
-}
-saveSettings();
+// адрес сервера теперь настраивается только в отдельном разделе «Серверы» —
+// здесь, в аккаунте, только логин/пароль и ссылка-переход туда, без своего поля ввода
+document.getElementById("accountServerLinkBtn").addEventListener("click",()=>{
+const serversFolder=document.getElementById("folderServers");
+if(!serversFolder) return;
+serversFolder.classList.add("open");
+serversFolder.scrollIntoView({behavior:"smooth",block:"start"});
+vibrate(8);
 });
 document.getElementById("accountUsername").addEventListener("input",e=>{
 settings.account.username=e.target.value.trim();
@@ -3164,6 +3505,99 @@ setTimeout(()=>syncNow({}),1200);
 }
 
 // ---------- потяните вниз в меню, чтобы синхронизироваться с сервером ----------
+// ---------- блокировка прокрутки фона, пока открыта шторка/модалка ----------
+// без этого свайп вниз внутри списка (когда список долистан до верха) "проваливался"
+// в фон под шторкой, а на телефоне это доходило до нативного жеста браузера
+// "потянуть чтобы обновить страницу" — вся страница перезагружалась и человека
+// как будто "выбрасывало" из раздела, в котором он находился. Плюс overscroll-behavior
+// в CSS выше — это два независимых слоя защиты от одной и той же проблемы.
+(function setupBodyScrollLock(){
+const WATCH_SELECTOR="#historyDrawer,#page2Drawer,.modalOverlay";
+let savedScrollY=0,locked=false;
+// аппаратная/жестовая кнопка "назад" на Android: пока открыта шторка или модалка,
+// добавляем запись в историю браузера за КАЖДЫЙ дополнительно открытый слой (например
+// уведомления открыты поверх уже открытого меню) — тогда каждое нажатие "назад"
+// закрывает ровно один верхний слой, а не выбрасывает из приложения целиком
+let closingFromPopstate=false,lastOpenCount=0,programmaticPop=false;
+function isAnyOpen(){
+return currentOpenCount()>0;
+}
+function currentOpenCount(){
+return document.querySelectorAll(WATCH_SELECTOR+".open").length;
+}
+function closeTopOverlay(){
+const openModal=document.querySelector(".modalOverlay.open");
+if(openModal){openModal.classList.remove("open");return;}
+const page2=document.getElementById("page2Drawer");
+if(page2&&page2.classList.contains("open")){if(typeof closePage2==="function") closePage2(); else page2.classList.remove("open");return;}
+const hist=document.getElementById("historyDrawer");
+if(hist&&hist.classList.contains("open")){if(typeof closeHistory==="function") closeHistory(); else hist.classList.remove("open");return;}
+}
+window.addEventListener("popstate",()=>{
+// если это НАШ СОБСТВЕННЫЙ вызов history.back()/go() для синхронизации счётчика
+// (например, окно закрыли кнопкой "Сохранить", а не аппаратной кнопкой "назад") —
+// DOM уже в правильном состоянии, ничего закрывать повторно не нужно
+if(programmaticPop){
+programmaticPop=false;
+return;
+}
+if(isAnyOpen()){
+closingFromPopstate=true;
+closeTopOverlay();
+Promise.resolve().then(()=>{closingFromPopstate=false;});
+}
+});
+function syncHistory(){
+const count=currentOpenCount();
+if(count>lastOpenCount){
+for(let i=lastOpenCount;i<count;i++){
+try{window.history.pushState({xcarOverlay:true},"");}catch(e){}
+}
+lastOpenCount=count;
+}else if(count<lastOpenCount){
+const diff=lastOpenCount-count;
+lastOpenCount=count;
+if(!closingFromPopstate){
+// окно(а) закрыты не аппаратной кнопкой "назад" (например кнопкой "Сохранить"/"Отмена"),
+// значит нужно самим "откатить" лишние записи истории, иначе в следующий раз кнопка
+// "назад" сначала откроет заново уже закрытое окно. go(-N) откатывает сразу на N шагов
+// одним переходом (и одним событием popstate), поэтому достаточно одного programmaticPop
+try{
+programmaticPop=true;
+if(diff===1) window.history.back();
+else window.history.go(-diff);
+}catch(e){programmaticPop=false;}
+}
+}
+}
+function applyLock(){
+const shouldLock=isAnyOpen();
+if(shouldLock&&!locked){
+locked=true;
+savedScrollY=window.scrollY||window.pageYOffset||0;
+document.body.style.position="fixed";
+document.body.style.top=(-savedScrollY)+"px";
+document.body.style.left="0";
+document.body.style.right="0";
+document.body.style.width="100%";
+}else if(!shouldLock&&locked){
+locked=false;
+document.body.style.position="";
+document.body.style.top="";
+document.body.style.left="";
+document.body.style.right="";
+document.body.style.width="";
+window.scrollTo(0,savedScrollY);
+}
+syncHistory();
+}
+const watched=document.querySelectorAll(WATCH_SELECTOR);
+if(!watched.length) return;
+const mo=new MutationObserver(applyLock);
+watched.forEach(el=>mo.observe(el,{attributes:true,attributeFilter:["class"]}));
+applyLock();
+})();
+
 (function setupPullToRefresh(){
 const content=document.getElementById("page2Content");
 const indicator=document.getElementById("pullRefreshIndicator");
@@ -3344,7 +3778,39 @@ location.reload();
 
 if("serviceWorker" in navigator){
 window.addEventListener("load",()=>{
-navigator.serviceWorker.register("service-worker.js").catch(err=>console.log("SW error:",err));
+navigator.serviceWorker.register("service-worker.js").then(reg=>{
+// сразу проверяем, нет ли новой версии — не ждём, пока браузер сам решит проверить
+try{reg.update();}catch(e){}
+// и повторяем проверку каждый раз, когда приложение возвращается на передний план
+// (человек открыл телефон и вернулся в приложение из фона) — так обновления
+// приходят сами, без необходимости держать кнопку "обновить" 2 секунды вручную
+document.addEventListener("visibilitychange",()=>{
+if(!document.hidden){try{reg.update();}catch(e){}}
+});
+}).catch(err=>console.log("SW error:",err));
+// когда новый service worker берёт управление страницей — значит вышла новая версия
+// приложения; аккуратно перезагружаем один раз, чтобы сразу подхватить свежий код.
+// первое "controllerchange" на совсем новой установке — это не обновление, а обычный
+// первый запуск, поэтому его пропускаем и не перезагружаем страницу зря
+let hadControllerBefore=!!navigator.serviceWorker.controller,swRefreshing=false;
+navigator.serviceWorker.addEventListener("controllerchange",()=>{
+if(swRefreshing) return;
+if(!hadControllerBefore){hadControllerBefore=true;return;}
+swRefreshing=true;
+location.reload();
+});
+// пока приложение открыто на экране, браузер обычно НЕ показывает системное push-уведомление
+// поверх активной вкладки — поэтому service worker дублирует сигнал сюда: проигрываем звук,
+// вибрируем и добавляем запись в колокольчик уведомлений, чтобы событие не потерялось
+navigator.serviceWorker.addEventListener("message",(e)=>{
+if(!e.data||e.data.type!=="xcar-push") return;
+playBeep(740,90,0.16);
+setTimeout(()=>playBeep(980,160,0.16),110);
+vibrate([200,90,200,90,200]);
+if(typeof addAppNotification==="function"){
+addAppNotification({type:"push",text:e.data.body||e.data.title||"Событие на другом устройстве"});
+}
+});
 });
 }
 
